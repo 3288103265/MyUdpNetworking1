@@ -20,7 +20,7 @@ namespace UdpServer
             byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
             Image recvImg = Byte2Img(recvBytes);
             recvImg.Save("test2.jpg", ImageFormat.Jpeg);
-            Mat rsc = Cv2.ImRead("test2.jpg");
+            Mat rsc = Cv2.ImRead("test2.jpg", ImreadModes.AnyColor);
             Cv2.ImShow("RecvImg", rsc);
             Cv2.WaitKey(0);
 
