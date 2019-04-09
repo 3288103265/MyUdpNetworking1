@@ -9,7 +9,7 @@ namespace UdpSender
         {
             UdpClient udpClient = new UdpClient(0);
 
-            udpClient.Connect("", 11000);
+            udpClient.Connect("210.72.22.237", 11000);
             byte[] sendBytes = Encoding.ASCII.GetBytes("Is anybody there?");
             udpClient.Send(sendBytes, sendBytes.Length);
 

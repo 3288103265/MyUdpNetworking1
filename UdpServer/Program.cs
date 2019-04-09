@@ -16,6 +16,8 @@ namespace UdpServer
             byte[] receiveBytes = udpServer.Receive(ref remoteIpEndPoint);
             string revMsg = Encoding.ASCII.GetString(receiveBytes);
             Console.WriteLine($"Received: {revMsg}");
+            Console.WriteLine("From IP: " + remoteIpEndPoint.Address.ToString());
+            Console.WriteLine("From Port: " + remoteIpEndPoint.Port.ToString());
 
             udpServer.Close();
 
