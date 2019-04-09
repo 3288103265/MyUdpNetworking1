@@ -14,7 +14,7 @@ namespace UdpSender
             
             UdpClient udpClient = new UdpClient(0);
             udpClient.Connect("210.72.22.237", 11000);
-            byte[] imgByte = Img2Bytes("lena.tiff");
+            byte[] imgByte = Img2Bytes("test.jpg");
             udpClient.Send(imgByte, imgByte.Length);
 
             udpClient.Close();
