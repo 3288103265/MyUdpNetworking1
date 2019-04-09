@@ -2,6 +2,10 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
+using OpenCvSharp;
+using System.IO;
 
 namespace UdpServer
 {
@@ -13,14 +17,28 @@ namespace UdpServer
 
             IPEndPoint remoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
-            byte[] receiveBytes = udpServer.Receive(ref remoteIpEndPoint);
-            string revMsg = Encoding.ASCII.GetString(receiveBytes);
-            Console.WriteLine($"Received: {revMsg}");
-            Console.WriteLine("From IP: " + remoteIpEndPoint.Address.ToString());
-            Console.WriteLine("From Port: " + remoteIpEndPoint.Port.ToString());
+            byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
+            Image recvImg = Byte2Img(recvBytes);
+            recvImg.Save("lena2.tiff", ImageFormat.Tiff);
+            Mat rsc = Cv2.ImRead("lena2.tiff");
+            Cv2.ImShow("RecvImg", rsc);
+            Cv2.WaitKey(0);
+
+
+            //string revMsg = Encoding.ASCII.GetString(receiveBytes);
+            //Console.WriteLine($"Received: {revMsg}");
+            //Console.WriteLine("From IP: " + remoteIpEndPoint.Address.ToString());
+            //Console.WriteLine("From Port: " + remoteIpEndPoint.Port.ToString());
 
             udpServer.Close();
 
+            Image Byte2Img(byte[] imgByte)
+            {
+                var ms = new MemoryStream(imgByte);
+                return Bitmap.FromStream(ms, true);
+            }
         }
+
+        
     }
 }
