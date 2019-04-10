@@ -20,7 +20,7 @@ namespace UdpServer
 
             List<string> addr = GetAddressList();
 
-            for (int i = 0; i < 155; i++)
+            for (int i = 1; i <= 155; i++)
             {
                 byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
                 Image recvImg = Byte2Img(recvBytes);
@@ -46,7 +46,7 @@ namespace UdpServer
                 List<string> addrList = new List<string>();
                 string Addr = "D:\\Pictures\\RecvResult\\";
 
-                for (int i = 0; i < 155; i++)
+                for (int i = 1; i <= 155; i++)
                 {
                     addrList.Add(Addr + i.ToString() + ".jpg");
                 }

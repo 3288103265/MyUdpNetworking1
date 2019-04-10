@@ -38,9 +38,9 @@ namespace UdpSender
             {
                 //Generate a list contain address name.
                 List<string> addrList = new List<string>();
-                string Addr = "D:\\PythonProject\\Video2frame\\result";
+                string Addr = "D:\\PythonProject\\Video2frame\\result\\";
 
-                for (int i = 0; i < 155; i++)
+                for (int i = 1; i <= 155; i++)
                 {
                     addrList.Add(Addr + i.ToString() + ".jpg");
                 }
