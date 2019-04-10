@@ -4,8 +4,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using OpenCvSharp;
 using System.IO;
+using OpenCvSharp;
+using System.Collections.Generic;
+
 
 namespace UdpServer
 {
@@ -14,31 +16,44 @@ namespace UdpServer
         static void Main(string[] args)
         {
             UdpClient udpServer = new UdpClient(11000);
-
             IPEndPoint remoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
-            byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
-            Image recvImg = Byte2Img(recvBytes);
-            recvImg.Save("test2.jpg", ImageFormat.Jpeg);
-            Mat rsc = Cv2.ImRead("test2.jpg", ImreadModes.AnyColor);
-            Cv2.ImShow("RecvImg", rsc);
-            Cv2.WaitKey(0);
+            List<string> addr = GetAddressList();
 
-
-            //string revMsg = Encoding.ASCII.GetString(receiveBytes);
-            //Console.WriteLine($"Received: {revMsg}");
-            //Console.WriteLine("From IP: " + remoteIpEndPoint.Address.ToString());
-            //Console.WriteLine("From Port: " + remoteIpEndPoint.Port.ToString());
-
+            for (int i = 0; i < 10; i++)
+            {
+                byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
+                Image recvImg = Byte2Img(recvBytes);
+                recvImg.Save(addr[i], ImageFormat.Jpeg);
+                recvImg.Dispose();
+                Mat rsc = Cv2.ImRead(addr[i], ImreadModes.AnyColor);
+                Cv2.ImShow("RecvImg", rsc);
+                Cv2.WaitKey(0);
+                rsc.Dispose();
+            }
             udpServer.Close();
 
             Image Byte2Img(byte[] imgByte)
             {
+                //Convert Bytestream to Image.
                 var ms = new MemoryStream(imgByte);
                 return Bitmap.FromStream(ms, true);
             }
+
+            List<string> GetAddressList()
+            {
+                //Generate a list contain address name.
+                List<string> addrList = new List<string>();
+                string Addr = "D:\\Collections\\";
+
+                for (int i = 0; i < 10; i++)
+                {
+                    addrList.Add(Addr + i.ToString() + ".jpg");
+                }
+                return addrList;
+            }
         }
 
-        
+    
     }
 }

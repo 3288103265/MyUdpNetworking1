@@ -4,6 +4,7 @@ using OpenCvSharp;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Collections.Generic;
 
 namespace UdpSender
 {
@@ -14,9 +15,14 @@ namespace UdpSender
             
             UdpClient udpClient = new UdpClient(0);
             udpClient.Connect("210.72.22.237", 11000);
-            byte[] imgByte = Img2Bytes("test.jpg");
-            udpClient.Send(imgByte, imgByte.Length);
 
+            List<string> addr = GetAddressList();
+            for (int i = 0; i < 10; i++)
+            {
+                byte[] imgByte = Img2Bytes(addr[i]);
+                udpClient.Send(imgByte, imgByte.Length);
+            }
+            
             udpClient.Close();
 
             byte[] Img2Bytes(string path)
@@ -27,8 +33,19 @@ namespace UdpSender
                 file.Close();
                 return imgbyte;
             }
-        }
 
-        
+            List<string> GetAddressList()
+            {
+                //Generate a list contain address name.
+                List<string> addrList = new List<string>();
+                string Addr = "D:\\Pictures\\";
+
+                for (int i = 0; i < 10; i++)
+                {
+                    addrList.Add(Addr + i.ToString() + ".jpg");
+                }
+                return addrList;
+            }
+        }
     }
 }
