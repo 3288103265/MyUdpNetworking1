@@ -17,7 +17,7 @@ namespace UdpSender
             udpClient.Connect("210.72.22.237", 11000);
 
             List<string> addr = GetAddressList();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 155; i++)
             {
                 byte[] imgByte = Img2Bytes(addr[i]);
                 udpClient.Send(imgByte, imgByte.Length);
@@ -38,9 +38,9 @@ namespace UdpSender
             {
                 //Generate a list contain address name.
                 List<string> addrList = new List<string>();
-                string Addr = "D:\\Pictures\\";
+                string Addr = "D:\\PythonProject\\Video2frame\\result";
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 155; i++)
                 {
                     addrList.Add(Addr + i.ToString() + ".jpg");
                 }
