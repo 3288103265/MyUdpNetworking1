@@ -32,7 +32,7 @@ namespace UdpServer
 
                 Mat rsc = Cv2.ImRead(imgAddress, ImreadModes.AnyColor);
                 Cv2.ImShow("RecvImg", rsc);
-                Cv2.WaitKey(0);
+                Cv2.WaitKey(1);
                 rsc.Dispose();
             }
 
