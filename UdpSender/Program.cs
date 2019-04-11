@@ -13,8 +13,20 @@ namespace UdpSender
     {
         static void Main(string[] args)
         {
-            SendService();
-            
+            //Generate a list contain address name.
+            string Addr = "D:\\PythonProject\\Video2frame\\result\\";
+            UdpClient udpClient = new UdpClient(0);
+            udpClient.Connect("210.72.22.237", 11000);
+
+            for (int i = 1; i <= 1; i++)
+            {
+                string imgAddress = Addr + i.ToString() + ".jpg";
+                byte[] imgByte = Img2Bytes(imgAddress);
+                udpClient.Send(imgByte, imgByte.Length);
+            }
+            udpClient.Close();
+            System.Console.WriteLine("Transmission completed.");
+
             byte[] Img2Bytes(string path)
             {
                 var file = new FileStream(path, FileMode.Open);
@@ -23,23 +35,7 @@ namespace UdpSender
                 file.Close();
                 return imgbyte;
             }
-
-            void SendService()
-            {
-                //Generate a list contain address name.
-                string Addr = "D:\\PythonProject\\Video2frame\\result\\";
-                UdpClient udpClient = new UdpClient(0);
-                udpClient.Connect("210.72.22.237", 11000);
-
-                for (int i = 1; i<=1; i++)
-                {
-                    string imgAddress = Addr + i.ToString() + ".jpg";
-                    byte[] imgByte = Img2Bytes(imgAddress);
-                    udpClient.Send(imgByte, imgByte.Length);
-                }
-                udpClient.Close();
-                System.Console.WriteLine("Transmission completed.");
-            }
+            
         }
     }
 }

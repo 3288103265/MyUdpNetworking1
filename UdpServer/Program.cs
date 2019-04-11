@@ -17,23 +17,27 @@ namespace UdpServer
         {
             UdpClient udpServer = new UdpClient(11000);
             IPEndPoint remoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            string Addr = "D:\\Pictures\\results\\";
 
             for (int i = 1; i <= 1; i++)
             {
                 byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
                 Image recvImg = Byte2Img(recvBytes);
                 Console.WriteLine("Received " + i.ToString() +"th picture.");
-                string Addr = "D:\\Pictures\\results\\";
+                
                 string imgAddress = Addr + i.ToString() + ".jpg";
                 recvImg.Save(imgAddress, ImageFormat.Jpeg);
-                Console.WriteLine("Saved " + i.ToString() + "th picture.");
                 recvImg.Dispose();
+                Console.WriteLine("Saved " + i.ToString() + "th picture.");
+
                 Mat rsc = Cv2.ImRead(imgAddress, ImreadModes.AnyColor);
                 Cv2.ImShow("RecvImg", rsc);
                 Cv2.WaitKey(0);
                 rsc.Dispose();
             }
+
             Cv2.DestroyAllWindows();
+
             udpServer.Close();
             Console.WriteLine("Transmission completed.");
 
