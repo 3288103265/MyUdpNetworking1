@@ -13,9 +13,7 @@ namespace UdpSender
     {
         static void Main(string[] args)
         {
-            var taskThread = new Thread(new ThreadStart(SendService));
-            taskThread.IsBackground = true;
-            taskThread.Start();
+            SendService();
             
             byte[] Img2Bytes(string path)
             {
