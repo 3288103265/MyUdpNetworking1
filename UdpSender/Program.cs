@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace UdpSender
 {
@@ -12,19 +13,10 @@ namespace UdpSender
     {
         static void Main(string[] args)
         {
+            var taskThread = new Thread(new ThreadStart(SendService));
+            taskThread.IsBackground = true;
+            taskThread.Start();
             
-            UdpClient udpClient = new UdpClient(0);
-            udpClient.Connect("210.72.22.237", 11000);
-
-            List<string> addr = GetAddressList();
-            for (int i = 1; i <= 155; i++)
-            {
-                byte[] imgByte = Img2Bytes(addr[i]);
-                udpClient.Send(imgByte, imgByte.Length);
-            }
-            
-            udpClient.Close();
-
             byte[] Img2Bytes(string path)
             {
                 var file = new FileStream(path, FileMode.Open);
@@ -34,17 +26,20 @@ namespace UdpSender
                 return imgbyte;
             }
 
-            List<string> GetAddressList()
+            void SendService()
             {
                 //Generate a list contain address name.
-                List<string> addrList = new List<string>();
                 string Addr = "D:\\PythonProject\\Video2frame\\result\\";
+                UdpClient udpClient = new UdpClient(0);
+                udpClient.Connect("210.72.22.237", 11000);
 
-                for (int i = 1; i <= 155; i++)
+                for (int i = 1; i<=155; i++)
                 {
-                    addrList.Add(Addr + i.ToString() + ".jpg");
+                    string imgAddress = Addr + i.ToString() + ".jpg";
+                    byte[] imgByte = Img2Bytes(imgAddress);
+                    udpClient.Send(imgByte, imgByte.Length);
                 }
-                return addrList;
+                udpClient.Close();
             }
         }
     }
