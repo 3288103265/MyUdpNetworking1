@@ -31,7 +31,7 @@ namespace UdpServer
                 //Cv2.WaitKey(0);
                 //rsc.Dispose();
             }
-            Cv2.DestroyAllWindows();
+            //Cv2.DestroyAllWindows();
             udpServer.Close();
 
             Image Byte2Img(byte[] imgByte)
