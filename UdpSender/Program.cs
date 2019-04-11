@@ -40,6 +40,7 @@ namespace UdpSender
                     udpClient.Send(imgByte, imgByte.Length);
                 }
                 udpClient.Close();
+                System.Console.WriteLine("Transmission completed.");
             }
         }
     }

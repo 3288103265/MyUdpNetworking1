@@ -22,9 +22,11 @@ namespace UdpServer
             {
                 byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
                 Image recvImg = Byte2Img(recvBytes);
+                Console.WriteLine("Received " + i.ToString() +"th picture.");
                 string Addr = "D:\\Pictures\\results\\";
                 string imgAddress = Addr + i.ToString() + ".jpg";
                 recvImg.Save(imgAddress, ImageFormat.Jpeg);
+                Console.WriteLine("Saved " + i.ToString() + "th picture.");
                 recvImg.Dispose();
                 //Mat rsc = Cv2.ImRead(imgAddress, ImreadModes.AnyColor);
                 //Cv2.ImShow("RecvImg", rsc);
@@ -33,6 +35,7 @@ namespace UdpServer
             }
             //Cv2.DestroyAllWindows();
             udpServer.Close();
+            Console.WriteLine("Transmission completed.");
 
             Image Byte2Img(byte[] imgByte)
             {
