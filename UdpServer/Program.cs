@@ -19,7 +19,7 @@ namespace UdpServer
             IPEndPoint remoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             string Addr = "D:\\Pictures\\results\\";
 
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 155; i++)
             {
                 byte[] recvBytes = udpServer.Receive(ref remoteIpEndPoint);
                 Image recvImg = Byte2Img(recvBytes);

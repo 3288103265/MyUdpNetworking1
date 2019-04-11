@@ -18,7 +18,7 @@ namespace UdpSender
             UdpClient udpClient = new UdpClient(0);
             udpClient.Connect("210.72.22.237", 11000);
 
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 155; i++)
             {
                 string imgAddress = Addr + i.ToString() + ".jpg";
                 byte[] imgByte = Img2Bytes(imgAddress);
