@@ -14,7 +14,7 @@ namespace UdpSender
         static void Main(string[] args)
         {
             var sendThread = new Thread(new ThreadStart(SendService));
-            sendThread.IsBackground = true;
+            //sendThread.IsBackground = true;
             sendThread.Start();
 
             void SendService()
